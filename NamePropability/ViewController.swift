@@ -9,13 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    private var url = "https://api.nationalize.io?name="
-    
-    private var info: NameProbability? = nil
-
  
     @IBOutlet weak var userNameOutlet: UITextField!
+    
+    private var url = "https://api.nationalize.io?name="
+    private var info: NameProbability? = nil
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -27,42 +25,36 @@ class ViewController: UIViewController {
         showInfoVC.nameInfo = info
     }
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//    }
-    
     @IBAction func showInfoButtonPressed() {
         guard let name = userNameOutlet.text else { return }
         url += name
         exampleParsing()
         performSegue(withIdentifier: "showInfoSeguey", sender: nil)
+        userNameOutlet.text = ""
     }
-    
-    //    @IBAction func unwind(for unwindSegue: UIStoryboardSegue) {
-//
-//    }
-
-    
 }
 
 extension ViewController {
- 
+
+//    private func exampleParsing() -> (NameProbability) {
     private func exampleParsing() {
+//        let info: NameProbability
         guard let url = URL(string: url) else { return }
         
         URLSession.shared.dataTask(with: url) { jsonData, _, error in
             guard let jsonData = jsonData else {
-                print(error ?? "No error descriprion")
+                print(error?.localizedDescription ?? "No error descriprion")
                 return
             }
             do {
                 let nameProbability = try JSONDecoder().decode(NameProbability.self, from: jsonData)
+//                self.info = nameProbability
                 print(nameProbability)
             } catch let error {
-                print(error)
+                print(error.localizedDescription)
             }
         }.resume()
+//        return info
     }
 }
 
