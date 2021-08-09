@@ -9,29 +9,41 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let startUrl = "https://api.nationalize.io?name="
-    let url = "https://api.nationalize.io?name=michael"
-//    let humanName = "Eugenia"
-////    private let url: String
-//    var url = ""
+    
+    private var url = "https://api.nationalize.io?name="
+    
+    private var info: NameProbability? = nil
+
+ 
+    @IBOutlet weak var userNameOutlet: UITextField!
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let showInfoVC = segue.destination as? ShowInfoController else { return }
+        showInfoVC.nameInfo = info
+    }
+    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
 //
-//    global init(url: String) {
-//        self.url = startUrl + humanName
 //    }
     
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBAction func showInfoButtonPressed() {
+        guard let name = userNameOutlet.text else { return }
+        url += name
         exampleParsing()
-        // Do any additional setup after loading the view.
+        performSegue(withIdentifier: "showInfoSeguey", sender: nil)
     }
-    //   let nameProbability = try? newJSONDecoder().decode(NameProbability.self, from: jsonData)
+    
+    //    @IBAction func unwind(for unwindSegue: UIStoryboardSegue) {
+//
+//    }
 
+    
 }
 
 extension ViewController {
