@@ -11,10 +11,6 @@ class ShowInfoController: UITableViewController {
     
     var nameInfo: NameProbability!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -26,7 +22,6 @@ class ShowInfoController: UITableViewController {
 //        nameInfo.country?.count ?? 0
         3
     }
-
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
